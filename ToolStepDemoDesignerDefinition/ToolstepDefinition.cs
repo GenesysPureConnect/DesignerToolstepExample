@@ -69,6 +69,28 @@ namespace ToolStepDemoDesignerDefinition
 
             UpdateLog.Commit();
 
+            ININ.Interop.IDTypeLib.II3IDTool StockQuote;
+
+            StockQuote = Designer.Tools.RegisterTool(
+                null,                                                       //event sink - it gets called when it is created? see API guide
+                "TSD - Stock Quote",                                         //Label
+                "ToolStepDemo",                                             //ToolModuleName 
+                "TSD_StockQuote",                                            //Toolname - this should probably be unique
+                "Implements getting a stock quote via a web service",      //Description
+                "Tool Step Demo",                                           //Tool Category
+                "ToolStepDemo",                                             //DLL Name
+                "getStockQuote",                                                //Function name (in above DLL)
+                2                                                           //number of parameters
+                );
+
+
+            StockQuote.ParameterDefinitions.Item(0).SetAsInputComboBox(StringTypeSpecifier, "Stock Symbol", true);
+            StockQuote.ParameterDefinitions.Item(1).SetAsOutput(StringTypeSpecifier, "Stock Quote", true);
+
+            StockQuote.ExitPaths.Add("Next", 1, false);
+
+            StockQuote.Commit();
+
         }
 
         public void InitializeTypes(ININ.Interop.IDTypeLib.II3ID Designer)

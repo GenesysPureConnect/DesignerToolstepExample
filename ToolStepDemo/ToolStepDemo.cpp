@@ -143,6 +143,38 @@ extern "C" {
 		return 1;
 	}
 
+
+	//----------------------------------------------------------------------------
+	//Here we are calling a web service
+	//We'll only have 1 output and we'll use exit code of 1
+	//----------------------------------------------------------------------------
+	long __declspec(dllexport) getStockQuote(
+		Parameter * p_paParms,
+		int p_nParms
+		)
+	{
+		AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+		// Parameter 0: String input stock symbol		IN
+		// Parameter 1: String output xml stock quote	IN
+
+		System::String^ symbol = GetStringParameter(p_paParms[0]);
+
+		
+		ToolStepDemoDotNetLibrary::Demo ^dotnet = gcnew ToolStepDemoDotNetLibrary::Demo();
+
+		try
+		{
+			SetStringParameter(p_paParms[1], dotnet->getStockQuote(symbol));
+			return 1;
+		}
+		catch (...) //any exception
+		{
+			//silently eat any c++ exceptions
+		}
+
+		return 1;
+	}
 }
 
 

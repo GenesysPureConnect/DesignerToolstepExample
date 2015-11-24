@@ -23,7 +23,23 @@ namespace ToolStepDemoDotNetLibrary
 
         public string updateLog(string log, string newMessage)
         {
+           
             return String.Format("{0:MMddyy hhmmss}:  {1}\n{2}", DateTime.Now, newMessage, log);
+        }
+
+        //How about a stock quote?
+
+        public string getStockQuote(string symbol)
+        {
+            try
+            {
+                var x = new stockQuote.StockQuoteSoapClient();
+                return x.GetQuote("ININ");
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
     }
